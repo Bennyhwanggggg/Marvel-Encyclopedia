@@ -11,6 +11,7 @@ import marvel from '../apis/marvel';
 // async using redux thunk
 export const getComics = () => async (dispatch) => {
     const response = await marvel.get('/comics');
+    console.log(response.data)
     dispatch({ type: GET_COMICS, payload: response.data });
 };
 
