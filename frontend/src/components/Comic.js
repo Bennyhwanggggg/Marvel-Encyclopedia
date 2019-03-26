@@ -1,0 +1,110 @@
+import _ from 'lodash';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getComic } from '../actions';
+
+class Comic extends React.Component {
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        this.props.getComic(id);
+    }
+
+    showPrices(prices) {
+        return prices.map(price => {
+            return (
+                <div className="item">
+                    <div className="header">
+                        {price.type}
+                    </div>
+                    {price.price}
+                </div>
+            );
+        });
+    }
+
+    renderList() {
+        if (!_.isEmpty(this.props.comics)){
+            return this.props.comics.results.map(comic => {
+                return (
+                    <div className="ui segment" key={comic.id}>
+                        <div className="image container">
+                            <img 
+                                src={`${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`} 
+                                className="ui centered large rounded image"
+                                alt="thumbnail"/>
+                        </div>
+                        <div className="content">
+                            <div className="ui header">
+                                {comic.title}
+                            </div>
+                            <div className="ui description">
+                                {comic.description}
+                            </div>
+                            <div className="ui vertical segment">
+                                <div className="ui list">
+                                    <div className="item">
+                                        <div className="header">
+                                            Book format
+                                        </div>
+                                        {comic.format}
+                                    </div>
+                                    {this.showPrices(comic.prices)}
+                                    <div className="item">
+                                        <div className="header">
+                                            Creators
+                                        </div>
+                                        <Link to={`/comics/${comic.id}/creators`}>{comic.creators.available}</Link>
+                                    </div>
+                                    <div className="item">
+                                        <div className="header">
+                                            Characters
+                                        </div>
+                                        <Link to={`/comics/${comic.id}/characters`}>{comic.characters.available}</Link>
+                                    </div>
+                                    <div className="item">
+                                        <div className="header">
+                                            Stories
+                                        </div>
+                                        <Link to={`/comics/${comic.id}/stories`}>{comic.stories.available}</Link>
+                                    </div>
+                                    <div className="item">
+                                        <div className="header">
+                                            Events
+                                        </div>
+                                        <Link to={`/comics/${comic.id}/events`}>{comic.events.available}</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            })
+        } else {
+            return (
+                <div>
+                    Loading...
+                </div>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="ui container">{this.renderList()}</div>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        comics: state.comics
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    { getComic }
+)(Comic);

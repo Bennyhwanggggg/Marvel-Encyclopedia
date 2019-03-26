@@ -21,6 +21,7 @@ export const getComic = (id) => async (dispatch) => {
 
 export const getComicCharacters = (id) => async dispatch => {
     const response = await marvel.get(`/comics/${id}/characters`);
+    console.log(response.data)
     dispatch({ type: GET_COMIC_CHARACTERS, payload: response.data })
 };
 

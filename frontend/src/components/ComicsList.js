@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getComics } from '../actions';
 
@@ -18,7 +19,7 @@ class CommicList extends React.Component {
                         </div>
                         <div className="content">
                             <div className="header">
-                                {comic.title}
+                                <Link to={`/commics/${comic.id}`}>{comic.title}</Link>
                             </div>
                             <div className="description">{
                                 comic.description}
@@ -47,7 +48,6 @@ class CommicList extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log('state', state);
     return {
         comics: state.comics
     }
