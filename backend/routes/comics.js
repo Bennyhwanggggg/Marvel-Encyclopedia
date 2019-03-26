@@ -11,6 +11,7 @@ const PRIVATE_KEY = `${process.env.PRIVATE_KEY}`
 
 // /comics endpoint
 router.get('/', (req, res) => {
+    console.log('/comics called')
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`)
     request({
@@ -25,6 +26,7 @@ router.get('/', (req, res) => {
 
 // /comics/{comicId} endpoint
 router.get('/:id', (req, res) => {
+    console.log('/comics/id called')
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`);
     request({

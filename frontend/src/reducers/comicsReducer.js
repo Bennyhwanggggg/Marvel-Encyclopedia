@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { 
     GET_COMICS, 
     GET_COMIC, 
@@ -11,17 +10,17 @@ import {
 export default (state = {}, action) => {
     switch (action.type) {
         case GET_COMICS:
-            return { ...state, ..._.mapKeys(action.payload, 'id') };
+            return action.payload.data;
         case GET_COMIC:
-            return { ...state, [action.payload.id]: action.payload };
+            return action.payload.data;
         case GET_COMIC_CHARACTERS:
-            return { ...state, [action.payload.id]: action.payload };
+            return action.payload.data;
         case GET_COMIC_CREATORS:
-            return { ...state, [action.payload.id]: action.payload };
+            return action.payload.data;
         case GET_COMIC_EVENTS:
-            return { ...state, [action.payload.id]: action.payload };
+            return action.payload.data;
         case GET_COMIC_STORIES:
-            return { ...state, [action.payload.id]: action.payload };    
+            return action.payload.data;    
         default:
             return state;
     }
