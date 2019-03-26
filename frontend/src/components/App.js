@@ -6,7 +6,9 @@ import ComicCharacters from './ComicCharacters';
 import ComicCreators from './ComicCreators';
 import ComicEvents from './ComicEvents';
 import ComicStories from './ComicStories';
+import Header from './Header';
 import history from '../history';
+
 
 
 class App extends React.Component {
@@ -15,6 +17,7 @@ class App extends React.Component {
             <div className="ui container">
                 <Router history={history}>
                     <div>
+                        <Header/>
                         <Switch>
                             <Route path="/" exact component={ComicsList}/>
                             <Route path="/comics/:id" exact component={Comic}/>
