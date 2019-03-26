@@ -1,25 +1,13 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getComicCreators } from '../actions';
+import { renderItems } from '../helpers';
 
 class ComicCreators extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.getComicCreators(id);
-    }
-
-    renderItems = (items, itemType) => {
-        return items.map(item => {
-            const uriArray = item.resourceURI.split('/');
-            const id = uriArray[uriArray.length-1];
-            return (
-                <div className="item" key={id}>
-                    <Link to={`/${itemType}/${id}`}>{item.name}</Link>
-                </div>
-            )
-        })
     }
 
     renderCategories = (creator) => {
@@ -33,7 +21,7 @@ class ComicCreators extends React.Component {
                         {creator.comics.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(creator.comics.items, 'comics')}
+                            {renderItems(creator.comics.items, 'comics')}
                         </div>
                     </div>
                     <div className="item">
@@ -43,7 +31,7 @@ class ComicCreators extends React.Component {
                             {creator.events.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(creator.events.items, 'events')}
+                            {renderItems(creator.events.items, 'events')}
                         </div>
                     </div>
                     <div className="item">
@@ -53,7 +41,7 @@ class ComicCreators extends React.Component {
                         {creator.stories.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(creator.stories.items, 'stories')}
+                            {renderItems(creator.stories.items, 'stories')}
                         </div>
                     </div>
                 </div>

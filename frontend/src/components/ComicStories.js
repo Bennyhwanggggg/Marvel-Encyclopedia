@@ -1,25 +1,13 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getComicStories } from '../actions';
+import { renderItems } from '../helpers';
 
 class ComicStories extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.getComicStories(id);
-    }
-
-    renderItems = (items, itemType) => {
-        return items.map(item => {
-            const uriArray = item.resourceURI.split('/');
-            const id = uriArray[uriArray.length-1];
-            return (
-                <div className="item" key={id}>
-                    <Link to={`/${itemType}/${id}`}>{item.name}</Link>
-                </div>
-            )
-        })
     }
 
     renderCategories = (story) => {
@@ -33,7 +21,7 @@ class ComicStories extends React.Component {
                         {story.comics.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(story.comics.items, 'comics')}
+                            {renderItems(story.comics.items, 'comics')}
                         </div>
                     </div>
                     <div className="item">
@@ -43,7 +31,7 @@ class ComicStories extends React.Component {
                             {story.creators.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(story.creators.items, 'creators')}
+                            {renderItems(story.creators.items, 'creators')}
                         </div>
                     </div>
                     <div className="item">
@@ -53,7 +41,7 @@ class ComicStories extends React.Component {
                         {story.events.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(story.events.items, 'events')}
+                            {renderItems(story.events.items, 'events')}
                         </div>
                     </div>
                     <div className="item">
@@ -63,7 +51,7 @@ class ComicStories extends React.Component {
                         {story.characters.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(story.characters.items, 'characters')}
+                            {renderItems(story.characters.items, 'characters')}
                         </div>
                     </div>
                 </div>

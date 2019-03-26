@@ -1,25 +1,13 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getComicCharacters } from '../actions';
+import { renderItems } from '../helpers';
 
 class ComicCharacters extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.getComicCharacters(id);
-    }
-
-    renderItems = (items, itemType) => {
-        return items.map(item => {
-            const uriArray = item.resourceURI.split('/');
-            const id = uriArray[uriArray.length-1];
-            return (
-                <div className="item" key={id}>
-                    <Link to={`/${itemType}/${id}`}>{item.name}</Link>
-                </div>
-            )
-        })
     }
 
     renderCategories = (character) => {
@@ -33,7 +21,7 @@ class ComicCharacters extends React.Component {
                         {character.comics.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(character.comics.items, 'comics')}
+                            {renderItems(character.comics.items, 'comics')}
                         </div>
                     </div>
                     <div className="item">
@@ -43,7 +31,7 @@ class ComicCharacters extends React.Component {
                             {character.events.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(character.events.items, 'events')}
+                            {renderItems(character.events.items, 'events')}
                         </div>
                     </div>
                     <div className="item">
@@ -53,7 +41,7 @@ class ComicCharacters extends React.Component {
                         {character.stories.available}
                         <div>
                             Some of these are:
-                            {this.renderItems(character.stories.items, 'stories')}
+                            {renderItems(character.stories.items, 'stories')}
                         </div>
                     </div>
                 </div>
