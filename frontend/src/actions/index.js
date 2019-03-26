@@ -1,12 +1,17 @@
-import { 
-    GET_COMICS, 
-    GET_COMIC, 
+import {
+    GET_COMICS,
+    GET_COMIC,
     GET_COMIC_CHARACTERS,
     GET_COMIC_CREATORS,
-    GET_COMIC_EVENTS, 
-    GET_COMIC_STORIES
+    GET_COMIC_EVENTS,
+    GET_COMIC_STORIES,
+    SEARCH
 } from './types';
 import marvel from '../apis/marvel';
+
+export function search(value) {
+    return { type: SEARCH, value };
+}
 
 // async using redux thunk
 export const getComics = () => async (dispatch) => {
@@ -21,7 +26,6 @@ export const getComic = (id) => async (dispatch) => {
 
 export const getComicCharacters = (id) => async dispatch => {
     const response = await marvel.get(`/comics/${id}/characters`);
-    console.log(response.data)
     dispatch({ type: GET_COMIC_CHARACTERS, payload: response.data })
 };
 
