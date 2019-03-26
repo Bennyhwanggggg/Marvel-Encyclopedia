@@ -11,6 +11,7 @@ class ComicEvents extends React.Component {
     }
 
     renderCategories = (event) => {
+        console.log(event)
         if (!_.isEmpty(event.comics)) {
             return (
                 <div className="ui list">

@@ -7,6 +7,7 @@ import {
     GET_COMIC_STORIES
 } from '../actions/types';
 
+
 export default (state = {}, action) => {
     switch (action.type) {
         case GET_COMICS:

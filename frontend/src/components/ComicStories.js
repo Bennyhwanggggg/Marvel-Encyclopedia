@@ -64,7 +64,8 @@ class ComicStories extends React.Component {
     }
 
     renderList = () => {
-        if (!_.isEmpty(this.props.stories)){
+        console.log('stories', this.props.stories)
+        if (this.props.stories){
             if (!this.props.stories.results.length){
                 return (
                     <div>This comic has no stories</div>

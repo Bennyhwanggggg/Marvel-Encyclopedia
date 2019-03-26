@@ -54,7 +54,8 @@ class ComicCreators extends React.Component {
     }
 
     renderList = () => {
-        if (!_.isEmpty(this.props.creators)){
+        console.log(this.props.creators)
+        if (this.props.creators){
             if (!this.props.creators.results.length){
                 return (
                     <div>This comic has no events</div>
