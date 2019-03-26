@@ -11,7 +11,7 @@ class CommicList extends React.Component {
     render() {
         return (
             <div>
-                <h2>Comics</h2>
+                <h2>Home</h2>
                 <div className="ui items">{renderList(this.props.comics, 'comicList')}</div>
             </div>
         )
