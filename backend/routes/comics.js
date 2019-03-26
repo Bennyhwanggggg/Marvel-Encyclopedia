@@ -1,17 +1,15 @@
 var express = require("express");
 var router = express.Router();
-const https = require("https");
-var bodyParser = require("body-parser");
 var request = require('request');
 var md5 = require('md5');
+var cacheMiddleware = require('../middleware/cache');
 
 const url = 'https://gateway.marvel.com:443/v1/public/comics'
 const PUBLIC_KEY = `${process.env.PUBLIC_KEY}`
 const PRIVATE_KEY = `${process.env.PRIVATE_KEY}`
 
 // /comics endpoint
-router.get('/', (req, res) => {
-    console.log('/comics called')
+router.get('/', cacheMiddleware(30), (req, res) => {
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`)
     request({
@@ -25,8 +23,7 @@ router.get('/', (req, res) => {
 });
 
 // /comics/{comicId} endpoint
-router.get('/:id', (req, res) => {
-    console.log('/comics/id called')
+router.get('/:id', cacheMiddleware(30), (req, res) => {
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`);
     request({
@@ -40,7 +37,7 @@ router.get('/:id', (req, res) => {
 });
 
 // /comics/{comicId}/characters endpoint
-router.get('/:id/characters', (req, res) => {
+router.get('/:id/characters', cacheMiddleware(30), (req, res) => {
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`);
     request({
@@ -54,7 +51,7 @@ router.get('/:id/characters', (req, res) => {
 });
 
 // /comics/{comicId}/creaters endpoint
-router.get('/:id/creators', (req, res) => {
+router.get('/:id/creators', cacheMiddleware(30), (req, res) => {
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`);
     request({
@@ -68,7 +65,7 @@ router.get('/:id/creators', (req, res) => {
 });
 
 // /comics/{comicId}/events endpoint
-router.get('/:id/events', (req, res) => {
+router.get('/:id/events', cacheMiddleware(30), (req, res) => {
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`);
     request({
@@ -82,7 +79,7 @@ router.get('/:id/events', (req, res) => {
 });
 
 // /comics/{comicId}/stories endpoint
-router.get('/:id/stories', (req, res) => {
+router.get('/:id/stories', cacheMiddleware(30), (req, res) => {
     const timeStamp = Date.now().toString();
     const md5hash = md5(`${timeStamp}${PRIVATE_KEY}${PUBLIC_KEY}`);
     request({
