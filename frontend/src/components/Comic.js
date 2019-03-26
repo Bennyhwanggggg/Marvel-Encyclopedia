@@ -10,7 +10,7 @@ class Comic extends React.Component {
         this.props.getComic(id);
     }
 
-    showPrices(prices) {
+    showPrices = (prices) => {
         return prices.map(price => {
             return (
                 <div className="item">
@@ -23,9 +23,53 @@ class Comic extends React.Component {
         });
     }
 
+    renderItems = (comic) => {
+        if (!_.isEmpty(comic.prices)) {
+            return (
+                <div className="ui list">
+                    <div className="item">
+                        <div className="header">
+                            Book format
+                        </div>
+                        {comic.format}
+                    </div>
+                    {this.showPrices(comic.prices)}
+                    <div className="item">
+                        <div className="header">
+                            Creators
+                        </div>
+                        <Link to={`/comics/${comic.id}/creators`}>{comic.creators.available}</Link>
+                    </div>
+                    <div className="item">
+                        <div className="header">
+                            Characters
+                        </div>
+                        <Link to={`/comics/${comic.id}/characters`}>{comic.characters.available}</Link>
+                    </div>
+                    <div className="item">
+                        <div className="header">
+                            Stories
+                        </div>
+                        <Link to={`/comics/${comic.id}/stories`}>{comic.stories.available}</Link>
+                    </div>
+                    <div className="item">
+                        <div className="header">
+                            Events
+                        </div>
+                        <Link to={`/comics/${comic.id}/events`}>{comic.events.available}</Link>
+                    </div>
+                </div>
+            )
+        } else {
+            return(
+                <div>Loading...</div>
+            )
+        }
+    }
+
     renderList() {
-        if (!_.isEmpty(this.props.comics)){
-            return this.props.comics.results.map(comic => {
+        if (!_.isEmpty(this.props.comic)){
+            return this.props.comic.results.map(comic => {
                 return (
                     <div className="ui segment" key={comic.id}>
                         <div className="image container">
@@ -42,39 +86,7 @@ class Comic extends React.Component {
                                 {comic.description}
                             </div>
                             <div className="ui vertical segment">
-                                <div className="ui list">
-                                    <div className="item">
-                                        <div className="header">
-                                            Book format
-                                        </div>
-                                        {comic.format}
-                                    </div>
-                                    {this.showPrices(comic.prices)}
-                                    <div className="item">
-                                        <div className="header">
-                                            Creators
-                                        </div>
-                                        <Link to={`/comics/${comic.id}/creators`}>{comic.creators.available}</Link>
-                                    </div>
-                                    <div className="item">
-                                        <div className="header">
-                                            Characters
-                                        </div>
-                                        <Link to={`/comics/${comic.id}/characters`}>{comic.characters.available}</Link>
-                                    </div>
-                                    <div className="item">
-                                        <div className="header">
-                                            Stories
-                                        </div>
-                                        <Link to={`/comics/${comic.id}/stories`}>{comic.stories.available}</Link>
-                                    </div>
-                                    <div className="item">
-                                        <div className="header">
-                                            Events
-                                        </div>
-                                        <Link to={`/comics/${comic.id}/events`}>{comic.events.available}</Link>
-                                    </div>
-                                </div>
+                                {this.renderItems(comic)}
                             </div>
                         </div>
                     </div>
@@ -100,7 +112,7 @@ class Comic extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        comics: state.comics
+        comic: state.comics
     }
 };
 

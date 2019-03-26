@@ -19,7 +19,7 @@ class CommicList extends React.Component {
                         </div>
                         <div className="content">
                             <div className="header">
-                                <Link to={`/commics/${comic.id}`}>{comic.title}</Link>
+                                <Link to={`/comics/${comic.id}`}>{comic.title}</Link>
                             </div>
                             <div className="description">{
                                 comic.description}
