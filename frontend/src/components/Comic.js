@@ -13,7 +13,7 @@ class Comic extends React.Component {
     showPrices = (prices) => {
         return prices.map(price => {
             return (
-                <div className="item">
+                <div className="item" key={price.type}>
                     <div className="header">
                         {price.type}
                     </div>
@@ -27,33 +27,33 @@ class Comic extends React.Component {
         if (!_.isEmpty(comic.prices)) {
             return (
                 <div className="ui list">
-                    <div className="item">
+                    <div className="item" key={`${comic.id}-book-format`}>
                         <div className="header">
                             Book format
                         </div>
                         {comic.format}
                     </div>
                     {this.showPrices(comic.prices)}
-                    <div className="item">
+                    <div className="item" key={`${comic.id}-creator`}>
                         <div className="header">
                             Creators
                         </div>
                         <Link to={`/comics/${comic.id}/creators`}>{comic.creators.available}</Link>
                     </div>
-                    <div className="item">
+                    <div className="item" key={`${comic.id}-characters`}>
                         <div className="header">
                             Characters
                         </div>
                         <Link to={`/comics/${comic.id}/characters`}>{comic.characters.available}</Link>
                     </div>
                     <div className="item">
-                        <div className="header">
+                        <div className="header" key={`${comic.id}-stories`}>
                             Stories
                         </div>
                         <Link to={`/comics/${comic.id}/stories`}>{comic.stories.available}</Link>
                     </div>
                     <div className="item">
-                        <div className="header">
+                        <div className="header" key={`${comic.id}-events`}>
                             Events
                         </div>
                         <Link to={`/comics/${comic.id}/events`}>{comic.events.available}</Link>

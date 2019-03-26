@@ -14,7 +14,7 @@ class ComicCharacters extends React.Component {
         if (!_.isEmpty(character.comics)) {
             return (
                 <div className="ui list">
-                    <div className="item">
+                    <div className="item" key={`${character.id}-comics`}>
                         <div className="header">
                             Appeared in comics
                         </div>
@@ -24,7 +24,7 @@ class ComicCharacters extends React.Component {
                             {renderItems(character.comics.items, 'comics')}
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item" key={`${character.id}-events`}>
                         <div className="header">
                             Number of events
                         </div>
@@ -34,7 +34,7 @@ class ComicCharacters extends React.Component {
                             {renderItems(character.events.items, 'events')}
                         </div>
                     </div>
-                    <div className="item">
+                    <div className="item" key={`${character.id}-stories`}>
                         <div className="header">
                             Number of stories appeared in
                         </div>
