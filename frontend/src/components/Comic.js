@@ -24,7 +24,7 @@ class Comic extends React.Component {
     }
 
     renderItems = (comic) => {
-        if (!_.isEmpty(comic.prices)) {
+        if (comic.prices && comic.characters && comic.creators && comic.events) {
             return (
                 <div className="ui list">
                     <div className="item" key={`${comic.id}-book-format`}>
@@ -70,27 +70,45 @@ class Comic extends React.Component {
     renderList() {
         if (!_.isEmpty(this.props.comic)){
             return this.props.comic.results.map(comic => {
-                return (
-                    <div className="ui segment" key={comic.id}>
-                        <div className="image container">
-                            <img 
-                                src={`${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`} 
-                                className="ui centered large rounded image"
-                                alt="thumbnail"/>
+                if (comic.thumbnail) {
+                    return (
+                        <div className="ui segment" key={comic.id}>
+                            <div className="image container">
+                                <img 
+                                    src={`${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`} 
+                                    className="ui centered large rounded image"
+                                    alt="thumbnail"/>
+                            </div>
+                            <div className="content">
+                                <div className="ui header">
+                                    {comic.title}
+                                </div>
+                                <div className="ui description">
+                                    {comic.description}
+                                </div>
+                                <div className="ui vertical segment">
+                                    {this.renderItems(comic)}
+                                </div>
+                            </div>
                         </div>
-                        <div className="content">
-                            <div className="ui header">
-                                {comic.title}
-                            </div>
-                            <div className="ui description">
-                                {comic.description}
-                            </div>
-                            <div className="ui vertical segment">
-                                {this.renderItems(comic)}
+                    )
+                } else {
+                    return (
+                        <div className="ui segment" key={comic.id}>
+                            <div className="content">
+                                <div className="ui header">
+                                    {comic.title}
+                                </div>
+                                <div className="ui description">
+                                    {comic.description}
+                                </div>
+                                <div className="ui vertical segment">
+                                    {this.renderItems(comic)}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )
+                    )
+                }
             })
         } else {
             return (
