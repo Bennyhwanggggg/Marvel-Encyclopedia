@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "md5": "^2.2.1",
     "request": "^2.88.0"
   }
 }
