@@ -1,0 +1,123 @@
+import _ from 'lodash';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getComicCreators } from '../actions';
+
+class ComicCreators extends React.Component {
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        this.props.getComicCreators(id);
+    }
+
+    renderItems = (items, itemType) => {
+        return items.map(item => {
+            const uriArray = item.resourceURI.split('/');
+            const id = uriArray[uriArray.length-1];
+            return (
+                <div className="item" key={id}>
+                    <Link to={`/${itemType}/${id}`}>{item.name}</Link>
+                </div>
+            )
+        })
+    }
+
+    renderCategories = (creator) => {
+        if (!_.isEmpty(creator.comics)) {
+            return (
+                <div className="ui list">
+                    <div className="item">
+                        <div className="header">
+                            Number of comics created
+                        </div>
+                        {creator.comics.available}
+                        <div>
+                            Some of these are:
+                            {this.renderItems(creator.comics.items, 'comics')}
+                        </div>
+                    </div>
+                    <div className="item">
+                        <div className="header">
+                            Number of events
+                        </div>
+                            {creator.events.available}
+                        <div>
+                            Some of these are:
+                            {this.renderItems(creator.events.items, 'events')}
+                        </div>
+                    </div>
+                    <div className="item">
+                        <div className="header">
+                            Number of stories created
+                        </div>
+                        {creator.stories.available}
+                        <div>
+                            Some of these are:
+                            {this.renderItems(creator.stories.items, 'stories')}
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div>Loading...</div>
+            )
+        }
+    }
+
+    renderList = () => {
+        if (!_.isEmpty(this.props.creators)){
+            if (!this.props.creators.results.length){
+                return (
+                    <div>This comic has no events</div>
+                )
+            }
+            return this.props.creators.results.map(creator => {
+                return (
+                    <div className="item title" key={creator.id}>
+                        <i className="dropdown icon"></i>
+                        <div className="image">
+                            <img src={`${creator.thumbnail.path}/portrait_medium.${creator.thumbnail.extension}`} alt="thumbnail"/>
+                        </div>
+                        <div className="content">
+                            <div className="header">
+                                {creator.fullName}
+                            </div>
+                            <div className="description">
+                                {creator.description}
+                            </div>
+                            <div className="ui vertical segment">
+                                {this.renderCategories(creator)}
+                            </div>
+                        </div>
+                    </div>
+                )
+            })
+        } else {
+            return (
+                <div>
+                    Loading...
+                </div>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="ui divided items styled fluid accordion">{this.renderList()}</div>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        creators: state.comics
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    { getComicCreators }
+)(ComicCreators);

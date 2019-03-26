@@ -67,6 +67,11 @@ class ComicCharacters extends React.Component {
 
     renderList = () => {
         if (!_.isEmpty(this.props.characters)){
+            if (!this.props.characters.results.length){
+                return (
+                    <div>This comic has no characters</div>
+                )
+            }
             return this.props.characters.results.map(character => {
                 return (
                     <div className="item title" key={character.id}>
